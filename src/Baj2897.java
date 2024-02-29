@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Boj2897 {
+public class Baj2897 {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -9,13 +9,11 @@ public class Boj2897 {
         int row = Integer.parseInt(input[0]);
         int col = Integer.parseInt(input[1]);
 
-        String[][] parkingLot = new String[row][col];
+        char[][] parkingLot = new char[row][col];
 
         for (int i = 0; i < row; i++) {
-            String[] line = sc.nextLine().split("");
-            for (int j = 0; j < col; j++) {
-                parkingLot[i][j] = line[j];
-            }
+            String line = sc.nextLine();
+            parkingLot[i] = line.toCharArray();
         }
 
         int clear = 0;
@@ -24,32 +22,34 @@ public class Boj2897 {
         int breakThree = 0;
         int breakFour = 0;
 
-        for (int i = 0; i < row - 1; i++){
-            for (int j = 0; j < col -1; j++){
-                if(parkingLot[i][j].equals("#") || parkingLot[i][j+1].equals("#") || parkingLot[i+1][j].equals("#") || parkingLot[i+1][j+1].equals("#")){
+        for (int i = 0; i < row - 1; i++) {
+            for (int j = 0; j < col - 1; j++) {
+                if (parkingLot[i][j] == '#' || parkingLot[i][j + 1] == '#'
+                        || parkingLot[i + 1][j] == '#' || parkingLot[i + 1][j + 1] == '#') {
                     continue;
                 }
+
                 int carCount = 0;
-                if(parkingLot[i][j].equals("X")){
+                if (parkingLot[i][j] == 'X') {
                     carCount++;
                 }
-                if(parkingLot[i][j+1].equals("X")){
+                if (parkingLot[i][j + 1] == 'X') {
                     carCount++;
                 }
-                if (parkingLot[i+1][j].equals("X")){
+                if (parkingLot[i + 1][j] == 'X') {
                     carCount++;
                 }
-                if(parkingLot[i+1][j+1].equals("X")){
+                if (parkingLot[i + 1][j + 1] == 'X') {
                     carCount++;
                 }
 
-                if(carCount == 0){
+                if (carCount == 0) {
                     clear++;
-                } else if (carCount == 1){
+                } else if (carCount == 1) {
                     breakOne++;
-                } else if (carCount == 2){
+                } else if (carCount == 2) {
                     breakTwo++;
-                } else if (carCount == 3){
+                } else if (carCount == 3) {
                     breakThree++;
                 } else {
                     breakFour++;
