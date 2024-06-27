@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Scanner;
 
-public class Baj24481 {
+public class Baj24482 {
 
     public static ArrayList<Integer>[] graph;
 
@@ -45,7 +45,7 @@ public class Baj24481 {
         }
 
         for (int i = 1; i <= N; i++) {
-            Collections.sort(graph[i]);
+            Collections.sort(graph[i], Collections.reverseOrder());
         }
 
         Arrays.fill(visited, -1);
