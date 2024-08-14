@@ -1,26 +1,60 @@
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
 
 public class Baj17086 {
-    static int len;
+    static int N, M, answer = -1;
+    static int[][] map;
+    static boolean[][] visited;
+    static int[][] move = new int[][]{{-1, -1}, {-1, 0}, {-1, 1}, {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}};
 
-    public static void main(String[] args){
-        Scanner sc = new Scanner(System.in);
+    static int bfs(int row, int col) {
+        visited = new boolean[N + 1][M + 1];
+        Queue<int[]> q = new LinkedList<>();
+        q.add(new int[]{row, col, 0});
+        visited[row][col] = true;
 
-        String X = sc.nextLine();
-        len = X.length();
+        while (!q.isEmpty()) {
+            int[] cur = q.poll();
 
-        int[] arr = new int[len];
-        for(int i = 0; i < len; i++){
-            arr[i] = X.charAt(i) - '0';
+            for (int j = 0; j < 8; j++) {
+                int newRow = cur[0] + move[j][0];
+                int newCol = cur[1] + move[j][1];
+                int newDist = cur[2] + 1;
+
+                if (newRow < 0 || newRow >= N || newCol < 0 || newCol >= M || visited[newRow][newCol])
+                    continue;
+
+                if (map[newRow][newCol] == 1)
+                    return newDist;
+                q.add(new int[]{newRow, newCol, newDist});
+                visited[newRow][newCol] = true;
+            }
         }
-
-        int[] visited = new int[len];
-
+        return 0;
     }
 
-    public static void solve(int dep){
-        if(len == dep){
+    public static void main(String args[]) throws IOException {
+        BufferedReader bfr = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stk = new StringTokenizer(bfr.readLine());
+        N = Integer.parseInt(stk.nextToken());
+        M = Integer.parseInt(stk.nextToken());
+        map = new int[N + 1][M + 1];
 
+        for (int i = 0; i < N; i++) {
+            stk = new StringTokenizer(bfr.readLine());
+            for (int j = 0; j < M; j++) {
+                map[i][j] = Integer.parseInt(stk.nextToken());
+            }
         }
+
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                if (map[i][j] == 1)
+                    continue;
+                int tmp = bfs(i, j);
+                answer = tmp > answer ? tmp : answer;
+            }
+        }
+        System.out.println(answer);
     }
 }
